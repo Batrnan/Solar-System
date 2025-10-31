@@ -11,7 +11,7 @@ export function createEarth(loader) {
   earth.rotation.z = THREE.MathUtils.degToRad(23.5);
 
   const earthGroup = new THREE.Group();
-  earth.position.set(6, 0, 0);
+  earth.position.set(9, 0, 0);
   earthGroup.add(earth);
 
   return { earth, earthGroup };

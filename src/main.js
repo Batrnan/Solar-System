@@ -51,8 +51,8 @@ const { mars, marsGroup } = createMars(loader);
 scene.add(marsGroup);
 
 createStars(scene, 2000);
-createOrbit(scene, 6);
 createOrbit(scene, 9);
+createOrbit(scene, 12);
 
 // 조명
 scene.add(new THREE.AmbientLight(0xffffff, 0.2)); // 전체 살짝 밝히기

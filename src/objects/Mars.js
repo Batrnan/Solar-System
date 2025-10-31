@@ -11,7 +11,7 @@ export function createMars(loader) {
   mars.rotation.z = THREE.MathUtils.degToRad(25);
 
   const marsGroup = new THREE.Group();
-  mars.position.set(9, 0, 0);
+  mars.position.set(12, 0, 0);
   marsGroup.add(mars);
 
   return { mars, marsGroup };
