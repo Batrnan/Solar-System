@@ -1,8 +1,23 @@
 body {
   margin: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
 }
 #three-canvas {
   position: absolute;
   left: 0;
   top: 0;
+}
+
+#control-panel {
+  user-select: none;
+}
+
+#control-panel button:hover {
+  transform: scale(1.02);
+  transition: transform 0.1s;
+}
+
+#control-panel button:active {
+  transform: scale(0.98);
 }
