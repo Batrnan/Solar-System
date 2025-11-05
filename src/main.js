@@ -108,29 +108,24 @@ let animationState = {
 };
 
 // UI 컨트롤 패널 생성
+// === UI Control Panel (Refined English Version) ===
 function createControlPanel() {
   const panel = document.createElement('div');
   panel.id = 'control-panel';
-  panel.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    font-family: Arial, sans-serif;
-    min-width: 250px;
-    z-index: 1000;
-  `;
-  
-  // 속도 제어
+
+  const title = document.createElement('h2');
+  title.textContent = '☀️ Solar System ☀️ Simulation';
+  panel.appendChild(title);
+
+  // === Animation Speed ===
   const speedContainer = document.createElement('div');
   speedContainer.style.marginBottom = '15px';
+
   const speedLabel = document.createElement('label');
-  speedLabel.textContent = 'Speed: ';
+  speedLabel.textContent = 'Animation Speed:';
   speedLabel.style.display = 'block';
   speedLabel.style.marginBottom = '5px';
+
   const speedInput = document.createElement('input');
   speedInput.type = 'range';
   speedInput.min = '0';
@@ -138,111 +133,102 @@ function createControlPanel() {
   speedInput.step = '0.1';
   speedInput.value = '1';
   speedInput.style.width = '100%';
+
   const speedValue = document.createElement('span');
+  speedValue.className = 'speed-value';
   speedValue.textContent = '1.0x';
-  speedValue.style.marginLeft = '10px';
+
   speedInput.addEventListener('input', (e) => {
     animationState.speedMultiplier = parseFloat(e.target.value);
     speedValue.textContent = `${animationState.speedMultiplier.toFixed(1)}x`;
   });
+
   speedContainer.appendChild(speedLabel);
   speedContainer.appendChild(speedInput);
   speedContainer.appendChild(speedValue);
-  
-  // 자동 회전 토글
+
+  // === Auto Orbit Rotation Toggle ===
   const autoRotateContainer = document.createElement('div');
   autoRotateContainer.style.marginBottom = '15px';
+
   const autoRotateLabel = document.createElement('label');
   autoRotateLabel.style.display = 'flex';
   autoRotateLabel.style.alignItems = 'center';
   autoRotateLabel.style.cursor = 'pointer';
+
   const autoRotateCheckbox = document.createElement('input');
   autoRotateCheckbox.type = 'checkbox';
   autoRotateCheckbox.style.marginRight = '8px';
+
   autoRotateCheckbox.addEventListener('change', (e) => {
     animationState.autoRotate = e.target.checked;
     controls.autoRotate = e.target.checked;
     controls.autoRotateSpeed = animationState.autoRotateSpeed;
   });
+
   autoRotateLabel.appendChild(autoRotateCheckbox);
-  autoRotateLabel.appendChild(document.createTextNode('Automatic Rotation'));
+  autoRotateLabel.appendChild(document.createTextNode('Auto Orbit Rotation'));
   autoRotateContainer.appendChild(autoRotateLabel);
-  
-  // 궤도선 표시 토글
+
+  // === Orbit Display Toggle ===
   const orbitsContainer = document.createElement('div');
   orbitsContainer.style.marginBottom = '15px';
+
   const orbitsLabel = document.createElement('label');
   orbitsLabel.style.display = 'flex';
   orbitsLabel.style.alignItems = 'center';
   orbitsLabel.style.cursor = 'pointer';
+
   const orbitsCheckbox = document.createElement('input');
   orbitsCheckbox.type = 'checkbox';
   orbitsCheckbox.checked = true;
   orbitsCheckbox.style.marginRight = '8px';
+
   orbitsCheckbox.addEventListener('change', (e) => {
     animationState.showOrbits = e.target.checked;
-    orbitLines.forEach(orbit => {
-      orbit.visible = e.target.checked;
-    });
+    orbitLines.forEach(orbit => (orbit.visible = e.target.checked));
   });
+
   orbitsLabel.appendChild(orbitsCheckbox);
-  orbitsLabel.appendChild(document.createTextNode('orbits'));
+  orbitsLabel.appendChild(document.createTextNode('Show Orbits'));
   orbitsContainer.appendChild(orbitsLabel);
-  
-  // 시점 전환 버튼
+
+  // === Viewpoint Buttons ===
   const viewContainer = document.createElement('div');
   viewContainer.style.marginBottom = '15px';
+
   const viewLabel = document.createElement('div');
   viewLabel.textContent = 'Viewpoint:';
   viewLabel.style.marginBottom = '8px';
   viewContainer.appendChild(viewLabel);
-  
+
   const viewButtons = [
-    { name: 'Solar - System', view: 'overview' },
-    { name: 'Sun', view: 'sun' },
-    ...planets.map(p => ({ name: p.name, view: p.name }))
+    { name: 'Entire System', view: 'overview' },
+    { name: 'Sun (Center)', view: 'sun' },
+    ...planets.map((p) => ({ name: p.name, view: p.name })),
   ];
-  
-  viewButtons.forEach(btn => {
+
+  viewButtons.forEach((btn) => {
     const button = document.createElement('button');
     button.textContent = btn.name;
-    button.style.cssText = `
-      display: block;
-      width: 100%;
-      margin: 5px 0;
-      padding: 8px;
-      background: #4a90e2;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 12px;
-    `;
-    button.addEventListener('mouseenter', () => {
-      button.style.background = '#357abd';
-    });
-    button.addEventListener('mouseleave', () => {
-      button.style.background = '#4a90e2';
-    });
     button.addEventListener('click', () => {
       changeView(btn.view);
-      // 버튼 활성화 표시
-      viewButtons.forEach(b => {
-        const btnEl = Array.from(viewContainer.querySelectorAll('button'))
-          .find(el => el.textContent === b.name);
-        if (btnEl) {
-          btnEl.style.background = b.view === btn.view ? '#2e5c8a' : '#4a90e2';
-        }
+
+      // Toggle active state
+      Array.from(viewContainer.querySelectorAll('button')).forEach((b) => {
+        b.style.background = 'linear-gradient(90deg, #8b5cf6, #6366f1)';
       });
+      button.style.background = 'linear-gradient(90deg, #a78bfa, #818cf8)';
     });
     viewContainer.appendChild(button);
   });
-  
+
+  // === Assemble All Components ===
   panel.appendChild(speedContainer);
   panel.appendChild(autoRotateContainer);
   panel.appendChild(orbitsContainer);
   panel.appendChild(viewContainer);
-  
+
   document.body.appendChild(panel);
 }
 

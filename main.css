@@ -1,23 +1,94 @@
+/* === 기본 설정 === */
 body {
   margin: 0;
   overflow: hidden;
-  font-family: Arial, sans-serif;
+  font-family: 'Pretendard', 'Arial', sans-serif;
+  background-color: #000;
 }
+
 #three-canvas {
   position: absolute;
   left: 0;
   top: 0;
 }
 
+/* === 컨트롤 패널 === */
 #control-panel {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  width: 220px;
+  background: rgba(20, 20, 30, 0.9);
+  color: #ffffff;
+  padding: 20px 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
   user-select: none;
 }
 
+
+
+/* 패널 제목 */
+#control-panel h2 {
+  color: #ffffff;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 8px;
+}
+
+/* 라벨 */
+#control-panel label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* 슬라이더 */
+#control-panel input[type="range"] {
+  width: 100%;
+  accent-color: #8b5cf6;
+  margin-top: 6px;
+}
+
+/* 버튼 */
+#control-panel button {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #8b5cf6, #6366f1);
+  transition: all 0.15s ease-in-out;
+}
+
 #control-panel button:hover {
-  transform: scale(1.02);
-  transition: transform 0.1s;
+  background: linear-gradient(90deg, #a78bfa, #818cf8);
+  transform: scale(1.03);
 }
 
 #control-panel button:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
+}
+
+/* 체크박스 */
+#control-panel input[type="checkbox"] {
+  accent-color: #8b5cf6;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+/* 속도 수치 */
+#control-panel .speed-value {
+  display: block;
+  text-align: right;
+  font-size: 13px;
+  margin-top: 4px;
+  color: #a78bfa;
 }
