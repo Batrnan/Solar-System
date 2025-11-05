@@ -327,6 +327,7 @@ function changeView(viewType) {
     targetPos.set(0, 80, 120);
     targetLookAt.set(0, 0, 0);
     controls.enabled = true;
+    updatePlanetInfoPanel(null);
   } else if (viewType === 'sun') {
     // 태양 중심 - 행성들처럼 가까이서 보기
     const sunSize = 3.0;
@@ -339,6 +340,14 @@ function changeView(viewType) {
     targetLookAt.set(0, 0, 0);
     controls.enabled = true;
     animationState.followingPlanet = null;
+    updatePlanetInfoPanel({
+      name: 'Sun',
+      distance: '—',
+      size: sunSize,
+      tilt: '—',
+      rotSpeed: '—',
+      orbitSpeed: '—',
+    });
   } else {
     // 특정 행성 관찰
     const planet = planetGroups.find((p) => p.name === viewType);
@@ -355,6 +364,7 @@ function changeView(viewType) {
       );
       targetLookAt.copy(planetPos);
       controls.enabled = true;
+      updatePlanetInfoPanel(planet);
     }
   }
 
@@ -362,6 +372,63 @@ function changeView(viewType) {
   animationState.targetCameraPos.copy(targetPos);
   animationState.targetCameraLookAt.copy(targetLookAt);
   animationState.isCameraAnimating = true;
+}
+
+// === Planet Info Panel ===
+function createPlanetInfoPanel() {
+  const infoPanel = document.createElement('div');
+  infoPanel.id = 'planet-info-panel';
+  infoPanel.style.position = 'fixed';
+  infoPanel.style.top = '15px';
+  infoPanel.style.left = '15px';
+  infoPanel.style.padding = '12px 16px';
+  infoPanel.style.background = 'rgba(20, 20, 40, 0.9)';
+  infoPanel.style.color = '#fff';
+  infoPanel.style.borderRadius = '10px';
+  infoPanel.style.fontFamily = 'Arial, sans-serif';
+  infoPanel.style.fontSize = '14px';
+  infoPanel.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+  infoPanel.style.minWidth = '180px';
+  infoPanel.style.display = 'none';
+  infoPanel.style.zIndex = '998';
+  document.body.appendChild(infoPanel);
+}
+
+// === 행성 정보 업데이트 함수 ===
+function updatePlanetInfoPanel(planetData) {
+  const panel = document.getElementById('planet-info-panel');
+  if (!panel) return;
+
+  if (!planetData) {
+    panel.style.display = 'none';
+    return;
+  }
+
+  const imageUrl =
+    planetData.name === 'Sun'
+      ? '/textures/sun.jpg'
+      : planetData.texture?.startsWith('/')
+      ? planetData.texture
+      : `/textures/${planetData.texture}`;
+
+  panel.innerHTML = `
+    <h1 style="margin: 0 0 6px; font-size: 24px; color: #a5b4fc; marginottom: 8px;">
+      ${planetData.name}
+    </h1>
+    <p style="margin: 2px 0;">Distance: <b>${planetData.distance}</b> AU</p>
+    <p style="margin: 2px 0;">Size: <b>${planetData.size}</b></p>
+    <p style="margin: 2px 0;">Tilt: <b>${planetData.tilt}°</b></p>
+    <p style="margin: 2px 0;">Rotation Speed: <b>${planetData.rotSpeed}</b></p>
+    <p style="margin: 2px 0;">Orbit Speed: <b>${planetData.orbitSpeed}</b></p>
+    <div style="text-align: center; margin-top: 10px;">
+      <img 
+        src="${imageUrl}" 
+        alt="${planetData.name}" 
+        style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto;"
+      />
+    </div>
+  `;
+  panel.style.display = 'block';
 }
 
 // 애니메이션
@@ -461,6 +528,7 @@ function animate() {
 
 // UI 초기화
 createControlPanel();
+createPlanetInfoPanel();
 animate();
 
 // 토글 버튼
