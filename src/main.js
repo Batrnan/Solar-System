@@ -462,3 +462,29 @@ function animate() {
 // UI 초기화
 createControlPanel();
 animate();
+
+// 토글 버튼
+const toggleBtn = document.createElement('button');
+toggleBtn.id = 'toggle-panel-btn';
+toggleBtn.innerHTML = '≡';
+toggleBtn.style.position = 'fixed';
+toggleBtn.style.top = '15px';
+toggleBtn.style.right = '15px';
+toggleBtn.style.width = '40px';
+toggleBtn.style.height = '40px';
+toggleBtn.style.borderRadius = '50%';
+toggleBtn.style.border = 'none';
+toggleBtn.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6)';
+toggleBtn.style.color = 'white';
+toggleBtn.style.fontSize = '24px';
+toggleBtn.style.cursor = 'pointer';
+toggleBtn.style.zIndex = '999';
+
+toggleBtn.addEventListener('click', () => {
+  const panel = document.getElementById('control-panel');
+  if (!panel) return;
+  const isHidden = panel.style.display === 'none';
+  panel.style.display = isHidden ? 'block' : 'none';
+});
+
+document.body.appendChild(toggleBtn);
