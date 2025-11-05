@@ -42,7 +42,7 @@ pointLight.position.set(0, 0, 0); // 태양 위치에 조명 배치
 scene.add(pointLight);
 
 // 배경 별
-createStars(scene, 2000);
+const stars = createStars(scene, 2000);
 
 // 행성 데이터 (실제 자전/공전 주기 기반)
 // 자전 속도: 지구 1일 기준, 공전 속도: 지구 1년 기준으로 상대 비율 계산
@@ -375,6 +375,8 @@ function animate() {
     p.group.rotation.y += p.orbitSpeed * speed; // 공전
     p.planet.rotation.y += p.rotSpeed * speed; // 자전
   });
+
+  stars.material.uniforms.time.value += 0.03;
 
   // 부드러운 카메라 이동 애니메이션
   if (animationState.isCameraAnimating) {
