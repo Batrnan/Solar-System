@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export function createSun(loader) {
-  const sunGeo = new THREE.SphereGeometry(3.0, 32, 32);
+  const sunGeo = new THREE.SphereGeometry(4.0, 32, 32);
   const sunUniforms = {
     time: { value: 0.0 },
     sunTexture: { value: loader.load('/textures/sun.jpg') },
