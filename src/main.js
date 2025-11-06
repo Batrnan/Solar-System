@@ -538,15 +538,25 @@ toggleBtn.innerHTML = '≡';
 toggleBtn.style.position = 'fixed';
 toggleBtn.style.top = '15px';
 toggleBtn.style.right = '15px';
-toggleBtn.style.width = '40px';
-toggleBtn.style.height = '40px';
-toggleBtn.style.borderRadius = '50%';
-toggleBtn.style.border = 'none';
-toggleBtn.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6)';
+toggleBtn.style.width = '36px';
+toggleBtn.style.height = '36px';
+toggleBtn.style.borderRadius = '10px';
+toggleBtn.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+toggleBtn.style.background = 'rgba(255, 255, 255, 0.15)';
+toggleBtn.style.backdropFilter = 'blur(10px)';
 toggleBtn.style.color = 'white';
-toggleBtn.style.fontSize = '24px';
+toggleBtn.style.fontSize = '22px';
 toggleBtn.style.cursor = 'pointer';
 toggleBtn.style.zIndex = '999';
+toggleBtn.style.transition = 'all 0.2s ease';
+
+// Hover 효과
+toggleBtn.onmouseenter = () => {
+  toggleBtn.style.background = 'rgba(255, 255, 255, 0.25)';
+};
+toggleBtn.onmouseleave = () => {
+  toggleBtn.style.background = 'rgba(255, 255, 255, 0.15)';
+};
 
 toggleBtn.addEventListener('click', () => {
   const panel = document.getElementById('control-panel');
